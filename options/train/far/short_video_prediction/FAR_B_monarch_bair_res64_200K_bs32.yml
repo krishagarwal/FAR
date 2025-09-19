@@ -69,7 +69,7 @@ train:
 # validation settings
 val:
   val_pipeline: FARPipeline
-  val_freq: 1
+  val_freq: 20000
   sample_cfg:
     context_length: 2
     unroll_length: 28
@@ -82,6 +82,6 @@ val:
 
 # logging settings
 logger:
-  print_freq: 1
+  print_freq: 100
   save_checkpoint_freq: !!float 20000
   use_wandb: false
