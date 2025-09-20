@@ -104,7 +104,7 @@ spec:
                   cp /checkpoint-fsx/beidchen-sandbox/video/datasets/bair/*.tar /workspace/bair &&
                   cp /checkpoint-fsx/beidchen-sandbox/video/datasets/bair/*.json /workspace/bair &&
                   cd /workspace/bair &&
-                  tar -xvf *.tar &&
+                  find . -name "shard-*.tar" -exec tar -xvf {} \ &&
                   cd /code-fsx/beidchen-sandbox/video/FAR &&
                   rm -f datasets/bair &&
                   ln -s /workspace/bair datasets/bair &&
