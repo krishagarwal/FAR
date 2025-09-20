@@ -105,7 +105,7 @@ spec:
                   cp /checkpoint-fsx/beidchen-sandbox/video/datasets/bair/*.json /workspace/bair &&
                   cd /workspace/bair &&
                   find . -name "shard-*.tar" -exec tar -xvf {} \; &&
-                  cd /code-fsx/beidchen-sandbox/video/FAR &&
+                  cd /code-fsx/beidchen-sandbox/FAR &&
                   rm -f datasets/bair &&
                   ln -s /workspace/bair datasets/bair &&
                   torchrun --nproc_per_node=8 --rdzv-conf="timeout=3600,read_timeout=3600,join_timeout=3600" train.py -opt options/train/far/short_video_prediction/FAR_B_monarch_bair_res64_200K_bs32.yml | tee /code-fsx/beidchen-sandbox/far_FAR_B_monarch_bair_train_16xh200-bs2_gbs32.log
