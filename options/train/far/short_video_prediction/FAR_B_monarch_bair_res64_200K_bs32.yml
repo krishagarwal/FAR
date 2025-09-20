@@ -1,4 +1,4 @@
-name: FAR_B_bair_res64_200K_bs32
+name: FAR_B_bair_monarch_res64_200K_bs32
 manual_seed: 0
 mixed_precision: bf16
 

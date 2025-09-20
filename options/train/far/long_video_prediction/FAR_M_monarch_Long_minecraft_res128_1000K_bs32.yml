@@ -1,48 +1,50 @@
-name: FAR_B_bair_res64_baseline_200K_bs32
+name: FAR_M_Long_minecraft_res128_1000K_bs32
 manual_seed: 0
 mixed_precision: bf16
 
 # dataset and data loader settings
 datasets:
   train:
-    type: BairDataset
-    data_list: datasets/bair/bair_train.json
+    type: MinecraftDataset
+    data_list: datasets/minecraft_latent/minecraft_train.json
     split: training
+    use_latent: true
     data_cfg:
-      n_frames: 30
-      resolution: 64
+      num_frames: 300
       frame_interval: 1
-    batch_size_per_gpu: 2
+    batch_size_per_gpu: 4
 
   sample:
-    type: BairDataset
-    data_list: datasets/bair/bair_val.json
+    type: MinecraftDataset
+    data_list: datasets/minecraft/minecraft_val.json
     split: validation
     data_cfg:
-      n_frames: 30
-      resolution: 64
+      num_frames: 300
       frame_interval: 1
     num_sample: 256
-    batch_size_per_gpu: 16
+    batch_size_per_gpu: 8
 
 models:
   model_cfg:
     transformer:
       from_pretrained: ~ # diffusers pretrained path (from_pretrained)
       init_cfg:
-        type: FAR_B
+        type: FAR_M_Long
         config: {
-          "short_term_ctx_winsize": 30
+          "condition_cfg": {
+            "type": "action",
+            "num_action_classes": 4
+          }
         }
     vae:
       type: MyAutoencoderDC
-      from_config: options/model_cfg/dcae/model_8x_c32_config.json
-      from_config_pretrained: experiments/pretrained_models/FAR_Models/dcae/DCAE_BAIR_Res64-1a8547fb.pth
+      from_config: options/model_cfg/dcae/model_16x_c32_config.json
+      from_config_pretrained: experiments/pretrained_models/FAR_Models/dcae/DCAE_Minecraft_Res128-a5677f66.pth
     scheduler:
       from_pretrained: options/model_cfg/far/scheduler_config.json
   clean_context_ratio: 0.1
   weighting_scheme: logit_normal
-  training_type: base
+  training_type: long_context
 
 # path
 path:
@@ -62,26 +64,27 @@ train:
   ema_decay: 0.9999
 
   lr_scheduler: constant_with_warmup
-  warmup_iter: 0
-  total_iter: 200000
+  warmup_iter: 10000
+  total_iter: 1000000
   max_grad_norm: 1.0
 
 # validation settings
 val:
   val_pipeline: FARPipeline
-  val_freq: 20000
+  val_freq: 50000
   sample_cfg:
-    context_length: 2
-    unroll_length: 28
-    guidance_scale: 1.0
+    context_length: 144
+    unroll_length: 156
+    guidance_scale: 1.5
     num_inference_steps: 50
     sample_size: 8
     sample_trajectory_per_video: 1
+    use_kv_cache: false
   eval_cfg:
     metrics: ['mse', 'psnr', 'ssim', 'fvd', 'lpips']
 
 # logging settings
 logger:
   print_freq: 100
-  save_checkpoint_freq: !!float 20000
+  save_checkpoint_freq: !!float 50000
   use_wandb: false
