@@ -12,7 +12,7 @@ datasets:
       n_frames: 30
       resolution: 64
       frame_interval: 1
-    batch_size_per_gpu: 4
+    batch_size_per_gpu: 2
 
   sample:
     type: BairDataset
