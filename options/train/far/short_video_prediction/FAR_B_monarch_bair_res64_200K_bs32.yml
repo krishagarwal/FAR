@@ -84,4 +84,4 @@ val:
 logger:
   print_freq: 100
   save_checkpoint_freq: !!float 20000
-  use_wandb: false
+  use_wandb: true
