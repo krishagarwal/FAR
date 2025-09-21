@@ -1,4 +1,4 @@
-name: FAR_B_bair_monarch_max_constrain_reuse_qkv_res64_200K_bs32
+name: FAR_B_bair_monarch_max_constrain_reuse_qkv_res64_200K_bs32_lr5e-4
 manual_seed: 0
 mixed_precision: bf16
 
