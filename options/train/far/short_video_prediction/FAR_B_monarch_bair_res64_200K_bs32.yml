@@ -1,4 +1,4 @@
-name: FAR_B_bair_monarch_res64_200K_bs32_0.95
+name: FAR_B_bair_monarch_res64_200K_bs32_0.95_lr1e-5
 manual_seed: 0
 mixed_precision: bf16
 
@@ -54,7 +54,7 @@ train:
 
   optim_g:
     type: AdamW
-    lr: !!float 1e-4
+    lr: !!float 1e-5
     weight_decay: 0
     betas: [ 0.9, 0.95 ]
 
