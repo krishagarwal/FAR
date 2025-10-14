@@ -14,7 +14,7 @@ datasets:
       frame_interval: 1
     batch_size_per_gpu: 4
 
-  sample:/
+  sample:
     type: BairDataset
     data_list: /workspace/bair/bair_val.json
     split: validation
